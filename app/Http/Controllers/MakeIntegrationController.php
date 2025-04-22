@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+
+class MakeIntegrationController extends Controller
+{
+    public function sendCode()
+    {
+
+        $user = User::where('email', Auth::user()->email)->first();
+        
+        $code = rand(100000, 999999);
+
+        $user->code = $code;
+        $user->save();
+
+        Http::post('https://hook.eu2.make.com/756qelw66y6ecagd0xou5xauoemxsxjk', [
+            'to' => $user->email,
+            'name' => $user->name,
+            'code' => $code,
+        ]);
+
+        return redirect()->back()->with('status', 'verification-link-sent');
+    }
+
+    public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|integer|digits:6',
+        ]);
+
+        $user = User::where('email', Auth::user()->email)
+                    ->where('code', $request->code)
+                    ->first();
+
+        if (!$user) {
+            return redirect()->back()->withErrors(['code' => 'The verification code is invalid.'])->withInput();
+        }
+
+        $user->email_verified_at = now();
+        $user->code = null;
+        $user->save();
+
+        return redirect()->back()->with('status', 'veriftication-status');
+    }
+
+}
