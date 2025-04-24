@@ -39,9 +39,13 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::controller(MakeIntegrationController::class)->group( function() {
+
+        Route::post('make/send/feedback', 'sendFeedback')->name('send.feedback');
+
         Route::post('make/send/code', 'sendCode')->name('make.send.code');
         Route::patch('make/verify/email', 'verifyCode')->name('make.email.verify');
     });
+
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

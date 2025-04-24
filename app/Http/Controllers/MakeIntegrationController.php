@@ -49,4 +49,22 @@ class MakeIntegrationController extends Controller
         return redirect()->back()->with('status', 'veriftication-status');
     }
 
+    public function sendFeedback(Request $request)
+    {
+        
+        $request->validate([
+            'name' => 'required|string',
+            'feedback' => 'required|string',
+        ]);
+
+        $email_to = 'markromel.feguro@filamer.edu.ph';
+        
+        Http::post('https://hook.eu2.make.com/adbn2q9snp8xbovio48tfpkq40v1jluv', [
+            'from' => Auth::user()->email,
+            'to' => $email_to,
+            'name' => $request->name,
+            'feedback' => $request->feedback,
+        ]);
+    }
+
 }
