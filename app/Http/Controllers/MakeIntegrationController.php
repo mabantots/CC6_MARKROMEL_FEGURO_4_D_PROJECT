@@ -19,7 +19,7 @@ class MakeIntegrationController extends Controller
         $user->code = $code;
         $user->save();
 
-        Http::post('https://hook.eu2.make.com/756qelw66y6ecagd0xou5xauoemxsxjk', [
+        Http::post('YOURWEBHOOK', [
             'to' => $user->email,
             'name' => $user->name,
             'code' => $code,
@@ -59,7 +59,7 @@ class MakeIntegrationController extends Controller
 
         $email_to = 'markromel.feguro@filamer.edu.ph';
         
-        Http::post('https://hook.eu2.make.com/adbn2q9snp8xbovio48tfpkq40v1jluv', [
+        Http::post('YOURWEBHOOK', [
             'from' => Auth::user()->email,
             'to' => $email_to,
             'name' => $request->name,
