@@ -57,7 +57,7 @@ class MakeIntegrationController extends Controller
             'feedback' => 'required|string',
         ]);
 
-        $email_to = 'markromel.feguro@filamer.edu.ph';
+        $email_to = 'COMPANY EMAIL'; // YOUR COMPANY EMAIL
         
         Http::post('YOURWEBHOOK', [
             'from' => Auth::user()->email,
