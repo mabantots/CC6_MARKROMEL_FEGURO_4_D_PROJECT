@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('feedbackform')" :active="request()->routeIs('feedbackform')">
                         {{ __('Feedback') }}
                     </x-nav-link>
+
+                     <x-nav-link :href="route('productform')" :active="request()->routeIs('productform')">
+                        {{ __('Product') }}
+                    </x-nav-link>
                 </div>
             </div>
 

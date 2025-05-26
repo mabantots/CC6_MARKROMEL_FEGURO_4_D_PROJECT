@@ -42,8 +42,12 @@ Route::middleware('auth')->group(function () {
 
         Route::post('make/send/feedback', 'sendFeedback')->name('send.feedback');
 
+        Route::post('make/send/store/product', 'storeProduct')->name('store.product');
+
         Route::post('make/send/code', 'sendCode')->name('make.send.code');
         Route::patch('make/verify/email', 'verifyCode')->name('make.email.verify');
+
+
     });
 
 

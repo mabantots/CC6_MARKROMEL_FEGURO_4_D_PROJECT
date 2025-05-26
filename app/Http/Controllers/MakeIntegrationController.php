@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +67,34 @@ class MakeIntegrationController extends Controller
             'name' => $request->name,
             'feedback' => $request->feedback,
         ]);
+
+        return redirect()->back();
+
     }
 
+    public function storeProduct(Request $request)
+    {
+        $validated = $request->validate([
+            'product_name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'buying_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        $product = Product::create($validated);
+
+        if($product) {
+
+            Http::post('YOURWEBHOOK', [
+                'product_name' => $request->product_name,
+                'category_id' => $request->category_id,
+                'buying_price' => $request->buying_price,
+                'selling_price' => $request->selling_price,
+                'stock' => $request->stock,
+            ]);
+
+            return redirect()->back();
+        }
+    }
 }
