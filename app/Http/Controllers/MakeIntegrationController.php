@@ -86,7 +86,7 @@ class MakeIntegrationController extends Controller
 
         if($product) {
 
-            Http::post('YOURWEBHOOK', [
+            Http::post('https://hook.eu2.make.com/qx9oxhbwoc7xtmpfkne89k7qkmhqkrrx', [
                 'product_name' => $request->product_name,
                 'category_id' => $request->category_id,
                 'buying_price' => $request->buying_price,
